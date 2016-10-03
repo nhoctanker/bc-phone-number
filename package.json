@@ -1,6 +1,6 @@
 {
   "name": "bc-phone-number",
-  "version": "5.0.12",
+  "version": "5.0.13",
   "description": "An AngularJS international phone input directive",
   "main": "src/bc-phone-number.js",
   "scripts": {
@@ -21,11 +21,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "angular": "^1.4.7",
-    "angular-ui-bootstrap": "^0.14.1",
-    "bc-countries": "^2.0.0",
-    "bc-css-flags": "^3.0.0",
-    "bootstrap": "^3.3.5",
+   "angular": "~1.3.*",
+	"bootstrap": "~3.3.0",
+    "bc-css-flags": "~3.0.0",
+    "bc-countries": "~2.0.0",
+       "angular-ui-bootstrap": "^0.13.*",
     "jquery": "^2.1.4"
   },
   "devDependencies": {
