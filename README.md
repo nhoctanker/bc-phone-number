@@ -23,7 +23,7 @@ Just download the [dist](https://github.com/blockchain/bc-phone-number/tree/mast
 
 ## Usage
 ```html
-<bc-phone-number ng-model='theNumber' default-country='us' preferred-countries='us gb ca' is-valid='isValid'></bc-phone-number>
+<bc-phone-number ng-model='theNumber' country-codes='countries' default-country='us' preferred-countries='us gb ca' is-valid='isValid'></bc-phone-number>
 ```
 
 ```js
