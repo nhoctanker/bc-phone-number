@@ -33,6 +33,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
 				preferredCountriesCodes: '@preferredCountries',
 				defaultCountryCode: '@defaultCountry',
 				selectedCountry: '=',
+				countryCodes:'=',
 				isValid: '=',
 				ngModel: '=',
 				ngChange: '=',
@@ -54,6 +55,14 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
 				} else {
 					scope.allowFormatNumber = angular.copy(attrs.allowFormatNumber);
 				}
+				if (scope.countryCodes) {
+					scope.allCountries = [];
+					scope.countryCodes.forEach(function (code) {
+						scope.allCountries.push(bcCountries.getCountryByIso2Code(code));
+					});
+				} else {
+					scope.allCountries = bcCountries.getAllCountries();
+				}
 				scope.number = scope.ngModel;
 				scope.changed = function () {
 					if (typeof scope.ngChange == 'function') {
@@ -65,7 +74,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
 					var preferredCodes = scope.preferredCountriesCodes.split(' ');
 					scope.preferredCountries = getPreferredCountries(preferredCodes);
 				}
-
+				
 				scope.selectCountry = function (country) {
 					scope.selectedCountry = country;
 
@@ -96,10 +105,15 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
 				});
 
 				scope.$watch('number', function (newValue) {
-					if (scope.autoSetValidity) {
-						ctrl.$setValidity('phoneNumber', bcCountries.isValidNumber(newValue));
-					}
 					scope.isValid = bcCountries.isValidNumber(newValue);
+					if (scope.isValid && scope.countryCodes) {
+						var digits = bcCountries.getDigits(newValue);
+						var countryCode = bcCountries.getIso2CodeByDigits(digits);
+						scope.isValid = scope.countryCodes.indexOf(countryCode) >= 0;
+					}
+					if (scope.autoSetValidity) {
+						ctrl.$setValidity('phoneNumber', scope.isValid);
+					}
 				});
 
 				scope.$watch('number', function (newValue) {
